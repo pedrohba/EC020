@@ -1,5 +1,5 @@
 # EC020
 Projeto EC020 - INATEL
-Alunos: Pedro Henrique Bernardes Almeida 
-        Thiago Fukuoka
-        9º Período
+<br/>Alunos: Pedro Henrique Bernardes Almeida 
+<br/>        Thiago Fukuoka
+<br/>        9º Período
