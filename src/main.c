@@ -205,19 +205,20 @@ int main (void) {
 	init_ssp();
 	init_uart();
 
-	oled_init();
-	light_init();
+	oled_init(); //inicializa OLED
+	light_init(); //inicializa sensor de luz
 
 	if (SysTick_Config(SystemCoreClock / 1000)) {
 		while (1);  // Capture error
 	}
 
-	light_enable();
-	light_setRange(LIGHT_RANGE_4000);
+	light_enable(); //habilita sensor de luz
+	light_setRange(LIGHT_RANGE_4000); //seta faixa do sensor de luz para 4000.
 
 	oled_clearScreen(OLED_COLOR_WHITE);
-	oled_putString(1,9,  (uint8_t*)"Light  : ", OLED_COLOR_BLACK, OLED_COLOR_WHITE);
+	oled_putString(1,9,  (uint8_t*)"Light  : ", OLED_COLOR_BLACK, OLED_COLOR_WHITE); //pre configura oled para mostrar valor lido do sensor de luz
 
+	//mensagem inicial do sistema
 	UART_SendString(UART_DEV, (uint8_t*)"INATEL - Instituto Nacional de Telecomunicacoes\r\n");
 	UART_SendString(UART_DEV, (uint8_t*)"Disciplina: EC020 - Topicos Especiais em Computacao\r\n");
 	UART_SendString(UART_DEV, (uint8_t*)"Modularizacao de Sistemas Embarcados Usando Orientacao a Objeto\r\n");
@@ -228,9 +229,9 @@ int main (void) {
 		/* output values to OLED display */
 		intToString(lux, buf, 10, 10);
 		oled_fillRect((1+9*6),9, 80, 16, OLED_COLOR_WHITE);
-		oled_putString((1+9*6),9, buf, OLED_COLOR_BLACK, OLED_COLOR_WHITE);
+		oled_putString((1+9*6),9, buf, OLED_COLOR_BLACK, OLED_COLOR_WHITE); //mostra valor lido no display oled
 
-		if (menuIsShowing != 1) {
+		if (menuIsShowing != 1) { //exibe menu
 			show_range_selected(range_selected);
 			show_menu();
 			menuIsShowing = 1;
@@ -239,41 +240,41 @@ int main (void) {
 		len = UART_Receive(UART_DEV, &data,
 				1, NONE_BLOCKING);
 
-		if (len > 0) {
+		if (len > 0) { //se recebeu alguma coisa na UART
 			switch (data) {
-			case '1':
+			case '1': //mostra valor lido pelo sensor atraves da UART.
 				UART_SendString(UART_DEV, (uint8_t*)"\r\nValor lido pelo sensor: ");
 				UART_SendString(UART_DEV, (uint8_t*) buf);
 				break;
-			case '2':
+			case '2': //configura faixa do sensor para 1000.
 				light_shutdown();
 				light_enable();
 				light_setRange(LIGHT_RANGE_1000);
 				UART_SendString(UART_DEV, (uint8_t*)"\r\nSensor configurado para faixa de 0 a 1000.");
 				range_selected = 1;
 				break;
-			case '3':
+			case '3': //configura faixa do sensor para 4000.
 				light_shutdown();
 				light_enable();
 				light_setRange(LIGHT_RANGE_4000);
 				UART_SendString(UART_DEV, (uint8_t*)"\r\nSensor configurado para faixa de 0 a 4000.");
 				range_selected = 2;
 				break;
-			case '4':
+			case '4': //configura faixa do sensor para 16000.
 				light_shutdown();
 				light_enable();
 				light_setRange(LIGHT_RANGE_16000);
 				UART_SendString(UART_DEV, (uint8_t*)"\r\nSensor configurado para faixa de 0 a 16000.");
 				range_selected = 3;
 				break;
-			case '5':
+			case '5'://configura faixa do sensor para 64000.
 				light_shutdown();
 				light_enable();
 				light_setRange(LIGHT_RANGE_64000);
 				UART_SendString(UART_DEV, (uint8_t*)"\r\nSensor configurado para faixa de 0 a 64000.");
 				range_selected = 4;
 				break;
-			default:
+			default: //comando inválido.
 				UART_SendString(UART_DEV, (uint8_t*)"\r\nError - Opcao invalida!!");
 				break;
 			}
