@@ -27,6 +27,9 @@
 static uint32_t msTicks = 0;
 static uint8_t buf[10];
 
+/**
+ * Converte inteiro para String.
+ */
 static void intToString(int value, uint8_t* pBuf, uint32_t len, uint32_t base)
 {
 	static const char* pAscii = "0123456789abcdefghijklmnopqrstuvwxyz";
@@ -84,6 +87,9 @@ void SysTick_Handler(void) {
 	msTicks++;
 }
 
+/**
+ * Inicializa interface SPI.
+ */
 static void init_ssp(void)
 {
 	SSP_CFG_Type SSP_ConfigStruct;
@@ -121,6 +127,9 @@ static void init_ssp(void)
 
 }
 
+/**
+ * Inicializa interface I²C
+ */
 static void init_i2c(void)
 {
 	PINSEL_CFG_Type PinCfg;
@@ -140,6 +149,9 @@ static void init_i2c(void)
 	I2C_Cmd(LPC_I2C2, ENABLE);
 }
 
+/*
+ * Inicializa interface UART
+ * */
 static void init_uart(void)
 {
 	PINSEL_CFG_Type PinCfg;
@@ -164,6 +176,9 @@ static void init_uart(void)
 
 }
 
+/*
+ * Exibe menu através da comunicação UART.
+ * */
 void show_menu(void){
 	UART_SendString(UART_DEV, (uint8_t*)"\n\n********** MENU **********\r\n");
 	UART_SendString(UART_DEV, (uint8_t*)"(1) Ler sensor\r\n");
@@ -174,6 +189,9 @@ void show_menu(void){
 	UART_SendString(UART_DEV, (uint8_t*)"\r\nDigite uma das opcoes acima: ");
 }
 
+/*
+ * Exibe faixa de valores configurada no sensor através da comunicação UART.
+ * */
 void show_range_selected(uint8_t range){
 	switch (range) {
 	case RANGE_1000:
@@ -193,6 +211,9 @@ void show_range_selected(uint8_t range){
 	}
 }
 
+/**
+ * Função principal
+ */
 int main (void) {
 
 	uint8_t data = 0;
@@ -236,15 +257,14 @@ int main (void) {
 			show_menu();
 			menuIsShowing = 1;
 		}
-
 		len = UART_Receive(UART_DEV, &data,
 				1, NONE_BLOCKING);
-
 		if (len > 0) { //se recebeu alguma coisa na UART
 			switch (data) {
 			case '1': //mostra valor lido pelo sensor atraves da UART.
 				UART_SendString(UART_DEV, (uint8_t*)"\r\nValor lido pelo sensor: ");
 				UART_SendString(UART_DEV, (uint8_t*) buf);
+				UART_SendString(UART_DEV, (uint8_t*)" lux");
 				break;
 			case '2': //configura faixa do sensor para 1000.
 				light_shutdown();
@@ -281,7 +301,6 @@ int main (void) {
 
 			menuIsShowing = 0;
 		}
-
 		Timer0_Wait(100);
 	}
 

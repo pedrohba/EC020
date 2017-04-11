@@ -4,14 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../src/command_ctrl.c \
 ../src/cr_startup_lpc17.c \
 ../src/main.c 
 
 OBJS += \
+./src/command_ctrl.o \
 ./src/cr_startup_lpc17.o \
 ./src/main.o 
 
 C_DEPS += \
+./src/command_ctrl.d \
 ./src/cr_startup_lpc17.d \
 ./src/main.d 
 
