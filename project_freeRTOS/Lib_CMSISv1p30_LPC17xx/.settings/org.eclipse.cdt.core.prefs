@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+environment/project/com.crt.advproject.config.lib.debug.476180645/PATH/delimiter=\:
+environment/project/com.crt.advproject.config.lib.debug.476180645/PATH/operation=replace
+environment/project/com.crt.advproject.config.lib.debug.476180645/PATH/value=/usr/local/lpcxpresso_8.2.2_650/lpcxpresso/bin\:/usr/local/lpcxpresso_8.2.2_650/lpcxpresso/tools/bin\:/bin\:/usr/bin\:/sbin\:/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/games\:/usr/local/games\:/snap/bin
+environment/project/com.crt.advproject.config.lib.debug.476180645/append=true
+environment/project/com.crt.advproject.config.lib.debug.476180645/appendContributed=true
